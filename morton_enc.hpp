@@ -11,7 +11,14 @@ struct encoder {
     }
 
 private:
-    
+    static constexpr size_t mask_length(size_t digits) {
+        size_t result = 0;
+        while (digits / 2 > (1UL << result)) {
+            ++result;
+        }
+        return 1UL << result;
+    }
+
     template <size_t S, size_t L>
     struct mask {
         static std::bitset<N> make_mask() {
@@ -59,7 +66,7 @@ private:
     template <size_t Stride, size_t Shift, class Arg>
     std::bitset<N> encode_(Arg&& arg) {
         std::bitset<N> result(std::forward<Arg>(arg));
-        mask<Stride, N / 2 + N % 2>::apply(result);
+        mask<Stride, mask_length(8 * sizeof(Arg))>::apply(result);
         return result << Shift;
     }
 };
