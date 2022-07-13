@@ -7,7 +7,7 @@ Header only library offering a generic implementation for morton encoding (Z-ord
 
 The goal of this implementation is to 
 - offer an alternative when bit truncation is undesirable
--`allow straightforward integration when std::bitset` is used elsewhere in the code
+- allow straightforward integration when `std::bitset` is used elsewhere in the code
 - satisfy my NIH syndrome
 
 ## Usage
