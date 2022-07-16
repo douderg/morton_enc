@@ -78,8 +78,7 @@ const std::bitset<N> encoder<N>::mask<S, L>::mask_ = encoder<N>::mask<S, L>::mak
 template <size_t N>
 template <size_t S, size_t L>
 inline void encoder<N>::mask<S, L>::apply(std::bitset<N>& value) {
-    value |= (value << (S * L - L));
-    value &= mask_;
+    value = mask_ & (value | (value << (S * L - L)));
     mask<S, L/2>::apply(value);
 }
 
@@ -90,8 +89,7 @@ const std::bitset<N> encoder<N>::mask<S, 1>::mask_ = encoder<N>::mask<S, 1>::mak
 template <size_t N>
 template <size_t S>
 inline void encoder<N>::mask<S, 1>::apply(std::bitset<N>& value) {
-    value |= value << (S - 1);
-    value &= mask_;
+    value = mask_ & (value | (value << (S - 1)));
 }
 
 }
